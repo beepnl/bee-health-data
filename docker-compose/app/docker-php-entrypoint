@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+cp  /.env /app/
+cd /app
+composer update
+php artisan migrate:refresh --seed --force
+
+service supervisor start
+supervisorctl reread
+supervisorctl update
+supervisorctl start laravel-worker:*
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+        set -- php-fpm "$@"
+fi
+
+exec "$@"

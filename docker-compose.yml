@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres
+    container_name: bee-health-data-portal-db
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_DB: $DB_DATABASE
+      POSTGRES_PASSWORD: $DB_PASSWORD
+    volumes:
+      - ./docker-compose/pgsql:/docker-entrypoint-initdb.d
+    networks:
+      - bee_health_data_portal
+  app:
+    build:
+      args:
+        user: bee
+        uid: 1001
+      context: ./
+    image: bee-health-data-portal
+    container_name: bee-health-data-portal-app
+    restart: unless-stopped
+    working_dir: /app
+    depends_on:
+      - "db"
+      - "apache"
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./bee-health-data-portal/:/app
+    networks:
+      - bee_health_data_portal
+  apache:
+    image: 'bitnami/apache:latest'
+    container_name: bee-health-data-portal-apache
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+      - '443:8443'
+    volumes:
+      - ./bee-health-data-portal/:/app
+      - ./docker-compose/apache/bee_vhost.conf:/vhosts/bee_vhost.conf:ro
+    networks:
+      - bee_health_data_portal
+networks:
+  bee_health_data_portal:
+    driver: bridge

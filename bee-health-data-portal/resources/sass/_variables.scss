@@ -1,0 +1,59 @@
+// Variable overrides
+
+// Body
+$body-bg: #ededed;
+
+// Colors
+$white: #ffffff;
+$blue: #3a6b9f;
+// $indigo: #6574cd;
+// $purple: #9561e2;
+// $pink: #f66d9b;
+$red: #e05555;
+// $orange: #f6993f;
+$yellow: #e5b84b;
+$gray: #7b7b7b;
+$gray-dark: #272727;
+// $green: #38c172;
+// $teal: #4dc0b5;
+// $cyan: #6cb2eb;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+
+$font-family-base: ClearSans;
+$font-size-base: 1.125rem;
+$line-height-base: 1.6;
+$h1-font-size: 2.5rem;
+
+$link-color: $blue;
+
+// Colors
+$theme-colors: (
+  "primary": $blue,
+  "secondary": $gray,
+  "danger": $red,
+  "warning": $yellow,
+  "gray-dark": $gray-dark,
+);
+
+$colors: (
+  "blue": $blue,
+  "red": $red,
+  "yellow": $yellow,
+  "white": $white,
+  "gray": $gray,
+  "gray-dark": $gray-dark
+) !default;
+
+// Header
+$header-height: 90px;
+$header-light-bg: $white;
+
+// Footer
+$footer-light-bg: $gray-dark;
+$footer-light-color: $white;
+$footer-height:  70px;
+$footer-light-borders: 0;
+$header-light-border: 0;
+

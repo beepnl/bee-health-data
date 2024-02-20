@@ -1,0 +1,11 @@
+{
+  "availability-zones:account=038855593698:region=eu-central-1": [
+    "eu-central-1a",
+    "eu-central-1b",
+    "eu-central-1c"
+  ],
+  "hosted-zone:account=038855593698:domainName=beehealthdata.org:region=eu-central-1": {
+    "Id": "/hostedzone/Z04973713VOPUBM24PL7V",
+    "Name": "beehealthdata.org."
+  }
+}

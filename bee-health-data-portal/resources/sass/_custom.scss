@@ -1,0 +1,173 @@
+// Here you can add other styles
+
+.flag-icon{
+    min-height:32px;
+}
+
+.c-header-fixed{
+    top:0px;
+}
+
+.edit-menu-icon{
+    height:32px;
+}
+
+.pe-none {
+    cursor: default !important;
+}
+
+// Extend bootstrap
+
+a.text-hover-none:hover, a.text-hover-none:focus {
+    color: inherit !important;
+}
+
+a.text-waring-hover-none:hover, a.text-warning-hover-none:focus {
+    color: $yellow !important;
+}
+
+.c-main {
+    padding-top: 4 * $spacer;
+    padding-bottom: 4 * $spacer;
+}
+// End Extend bootstrap
+
+.page--home {
+    padding-top: 0 !important;
+}
+
+.btn.btn-primary, .btn.btn-secondary, .btn.btn-success, .btn.btn-info, .btn.btn-danger, .btn.btn-warning, .btn.btn-light, .btn.btn-dark {
+    font-weight: 300;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+.card.card-transparent, .card.card-transparent .card-header {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.card.card-transparent .card-header {
+    border: 0;
+}
+.vue-tags-input {
+    border-radius: $input-border-radius;
+}
+.vue-tags-input .ti-tag {
+    position: relative;
+    background: $blue !important;
+    color: #283944;
+}
+.vue-tags-input .ti-item.ti-selected-item {
+    background: $blue !important;
+    color: $white !important;
+}
+.ti-item, .ti-tag, .ti-tag-center {
+    word-break: break-all;
+}
+
+.ti-input {
+    min-height: calc(1.6em + 0.75rem + 2px) !important;
+    border: $input-border-width solid $gray-200__lt !important;
+    display: flex;
+    padding: 4px;
+    flex-wrap: wrap;
+    border-radius: $input-border-radius;
+}
+
+.vue-tags-input .ti-autocomplete {
+    border: $input-border-width solid $gray-200__lt !important;
+}
+
+.vdp-datepicker__clear-button {
+    margin-left: 1rem;
+}
+
+.vdp-datepicker {
+    min-width: 100%;
+
+    &> div:first-child {
+        display: flex;
+        align-items: center;
+    }
+}
+
+// .chart {
+//     cursor: pointer;
+// }
+
+// Custom checkboxes
+
+/* The container */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #305883;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 10px;
+    top: 5px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

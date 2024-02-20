@@ -1,0 +1,27 @@
+// Fonts
+@import 'fonts';
+
+// Variables
+@import 'variables';
+
+// depricated - for delete
+// // Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+
+// @import '~bootstrap-vue/src/index.scss';
+// @tailwind base;
+// @tailwind utilities;
+
+// CoreUI
+
+// Import styles with default layout.
+@import "~@coreui/coreui-pro/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+@import "badge";
+
+
+// Spinkit
+$spinkit-spinner-color: $body-color;
+@import "~spinkit/spinkit.css";

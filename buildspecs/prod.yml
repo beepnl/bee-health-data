@@ -1,0 +1,42 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+      - REGISTRY_URI=$AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+      # Build and push nginx image
+      - IMAGE_URI_NGINX=$REPOSITORY_URI_NGINX:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker pull $REPOSITORY_URI_NGINX:latest || true
+      - docker build --cache-from $REPOSITORY_URI_NGINX:latest -f nginx.Dockerfile --target prod -t $IMAGE_URI_NGINX .
+      - docker push $IMAGE_URI_NGINX
+      - IMAGE_URI_NGINX_LATEST=$REPOSITORY_URI_NGINX:latest
+      - docker tag $IMAGE_URI_NGINX $IMAGE_URI_NGINX_LATEST
+      - docker push $IMAGE_URI_NGINX_LATEST
+      # Build and push php image
+      - IMAGE_URI_PHP=$REPOSITORY_URI_PHP:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker pull $REPOSITORY_URI_PHP:latest || true
+      - docker build --cache-from $REPOSITORY_URI_PHP:latest -f php.Dockerfile --target prod -t $IMAGE_URI_PHP .
+      - docker push $IMAGE_URI_PHP
+      - IMAGE_URI_PHP_LATEST=$REPOSITORY_URI_PHP:latest
+      - docker tag $IMAGE_URI_PHP $IMAGE_URI_PHP_LATEST
+      - docker push $IMAGE_URI_PHP_LATEST
+      # Build and push worker image
+      - IMAGE_URI_WORKER=$REPOSITORY_URI_WORKER:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker pull $REPOSITORY_URI_WORKER:latest || true
+      - docker build --cache-from $REPOSITORY_URI_WORKER:latest -f worker.Dockerfile --target prod -t $IMAGE_URI_WORKER .
+      - docker push $IMAGE_URI_WORKER
+      - IMAGE_URI_WORKER_LATEST=$REPOSITORY_URI_WORKER:latest
+      - docker tag $IMAGE_URI_WORKER $IMAGE_URI_WORKER_LATEST
+      - docker push $IMAGE_URI_WORKER_LATEST
+      # Create build artifacts
+      - printf '[{"name":"Nginx","imageUri":"%s"}, {"name":"Php","imageUri":"%s"}]' $IMAGE_URI_NGINX $IMAGE_URI_PHP > imagedefinitions.json
+      - printf '[{"name":"Worker","imageUri":"%s"}]' $IMAGE_URI_WORKER > worker-imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
+    - worker-imagedefinitions.json

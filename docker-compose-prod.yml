@@ -1,0 +1,78 @@
+version: '3.4'
+
+networks:
+  ecs_network:
+    driver: bridge
+    ipam:
+        config:
+          - subnet: "169.254.170.0/24"
+            gateway: 169.254.170.1
+
+services:
+  ecs-local-endpoints:
+    image: amazon/amazon-ecs-local-container-endpoints
+    volumes:
+      - /var/run:/var/run
+      - $HOME/.aws/:/home/.aws/
+    environment:
+      AWS_PROFILE: "beep"
+    networks:
+      ecs_network:
+        ipv4_address: "169.254.170.2"
+  nginx:
+    build:
+      dockerfile: nginx.Dockerfile
+      target: prod
+      context: .
+    env_file:
+      - ./.env
+    ports:
+      - '8080:8080'
+    depends_on:
+      - ecs-local-endpoints
+      - php
+    networks:
+      ecs_network:
+        ipv4_address: "169.254.170.3"
+  php:
+    build:
+      dockerfile: php.Dockerfile
+      target: prod
+      context: .
+    env_file:
+      - ./.env
+    depends_on:
+      - ecs-local-endpoints
+      - db
+    networks:
+      ecs_network:
+        ipv4_address: "169.254.170.4"
+  worker:
+    build:
+      dockerfile: worker.Dockerfile
+      target: prod
+      context: .
+    env_file:
+      - ./.env
+    depends_on:
+      - ecs-local-endpoints
+      - db
+    networks:
+      ecs_network:
+        ipv4_address: "169.254.170.5"
+  db:
+    image: postgres
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_DB: $DB_DATABASE
+      POSTGRES_PASSWORD: $DB_PASSWORD
+    ports:
+      - "5432:5432"
+    depends_on:
+      - ecs-local-endpoints
+    networks:
+      ecs_network:
+        ipv4_address: "169.254.170.6"
+

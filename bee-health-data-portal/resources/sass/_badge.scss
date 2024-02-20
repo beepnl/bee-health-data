@@ -1,0 +1,57 @@
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -1rem;
+    // padding: 1rem;
+}
+.badge-group {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    
+    > label {
+        text-align: center;
+    }
+}
+
+a.badge-group {
+    color: $gray-dark;
+    & > label {
+        cursor: pointer;
+    }
+    &:hover {
+        text-decoration: none;
+
+        & > .badge {
+            cursor: pointer;
+            &.circle {
+                &.outline {
+                    &:hover {
+                        border: 10px solid $yellow;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.badge {
+    &.circle {
+        display: inline-flex;
+        border-radius: 50%;
+        width: 6rem;
+        height: 6rem;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        
+
+        &.outline {
+            background-color: transparent !important;
+            border: 2px solid $yellow;
+        }
+    }
+    
+}
